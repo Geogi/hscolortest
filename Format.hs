@@ -1,6 +1,7 @@
-module Format (format, compose, fprint,
+module Format (format, compose, fconcat, fshow, fprint, fprintln,
                Bold (Bold), Underline (Underline), Standout (Standout),
-               System.Console.Terminfo.Color.Color (..)) where
+               System.Console.Terminfo.Color.Color (..),
+               FShow) where
 
 import Control.Monad
 
@@ -40,6 +41,8 @@ instance Format Standout where
   with  = withStandout >>= \wa -> return (\_ s -> wa s)
 
 data Formatted = Formatted String (Capability TermOutput)
+instance FShow Formatted where
+  fshow = id
 
 format :: Format fmt => String -> fmt -> Formatted
 format s fmt = Formatted s (with >>= \wa -> return (wa fmt (termText s)))
@@ -49,9 +52,26 @@ compose (Formatted sn sf) fmt = Formatted sn (
   set >>= \sa -> sf >>= \fa -> unset >>= \ua ->
    return (sa fmt <#> fa <#> ua fmt))
 
-fprint :: Formatted -> IO ()
-fprint (Formatted plain formatted) = do
-  term <- setupTermFromEnv
-  case getCapability term (formatted) of
-    Just to -> runTermOutput term to
-    Nothing -> putStr plain
+fconcat :: Formatted -> Formatted -> Formatted
+fconcat (Formatted sn1 sf1) (Formatted sn2 sf2) = Formatted (sn1 ++ sn2) (
+  sf1 >>= \fa1 -> sf2 >>= \fa2 -> return (fa1 <#> fa2))
+
+lconcat :: Formatted -> String -> Formatted
+lconcat fs s = fconcat fs (Formatted s (return (termText s)))
+
+rconcat :: String -> Formatted -> Formatted
+rconcat s fs = fconcat (Formatted s (return (termText s))) fs
+
+class FShow fs where
+  fshow    :: fs -> Formatted
+  fprint   :: fs -> IO ()
+  fprintln :: fs -> IO ()
+  
+  fprint fs =
+    let (Formatted plain formatted) = fshow fs in do
+    term <- setupTermFromEnv
+    case getCapability term (formatted) of
+      Just to -> runTermOutput term to
+      Nothing -> putStr plain
+
+  fprintln fs = fprint (lconcat (fshow fs) "\n")
