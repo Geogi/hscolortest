@@ -1,0 +1,20 @@
+#+TITLE: hscolortest README
+
+* Introduction
+
+Developing this simple stand-alone Haskell program helps me understand
+how to color output by using `System.Console.Terminfo` (`terminfo`
+package).
+
+* Checklist
+
++ [X] Setup cabal and git
++ [X] Get bold text
++ [X] Get blue text
++ [ ] Get bold blue text
++ [ ] Factor out the formatting work
++ [ ] Color output from another module with the least boilerplate
+  possible
++ [ ] Try to see how to add coloring to an existing module with
+  non-invasive additions (e.g. not changing the types, adding some
+  values is OK)
