@@ -1,5 +1,6 @@
-module Format where
-
+module Format (format, compose, fprint,
+               Bold (Bold), Underline (Underline), Standout (Standout),
+               System.Console.Terminfo.Color.Color (..)) where
 
 import Control.Monad
 
