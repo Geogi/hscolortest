@@ -12,7 +12,7 @@ package).
 + [X] Get bold text
 + [X] Get blue text
 + [X] Get bold red text
-+ [ ] Factor out the formatting work
++ [X] Factor out the formatting work
 + [ ] Get automatic formatting of errors
 + [ ] Color output from another module with the least boilerplate
   possible
