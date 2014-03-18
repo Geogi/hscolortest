@@ -11,7 +11,7 @@ package).
 + [X] Setup cabal and git
 + [X] Get bold text
 + [X] Get blue text
-+ [ ] Get bold blue text
++ [X] Get bold red text
 + [ ] Factor out the formatting work
 + [ ] Get automatic formatting of errors
 + [ ] Color output from another module with the least boilerplate
@@ -20,4 +20,6 @@ package).
   (e.g. not changing the types, adding some values is OK)
 + [ ] Get it still working (not formatted) if the terminal is not
   capable or terminfo is not present
++ [ ] Add support for a =--no-color= option and infer its use if the
+  program is piped
 + [ ] Write a tutorial
