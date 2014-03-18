@@ -5,9 +5,9 @@ import System.Console.Terminfo.Effects
 
 boldText :: Capability (TermOutput)
 boldText = do
-  out  <- tiGetOutput1 "bold"
-  bold <- boldOn :: Capability (TermOutput)
-  return (out <#> bold <#> termText "bold text")
+  --out  <- tiGetOutput1 "bold"
+  bold <- withBold
+  return (bold (termText "bold text"))
 
 main :: IO ()
 main = do
