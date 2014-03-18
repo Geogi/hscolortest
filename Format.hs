@@ -18,24 +18,24 @@ class Format fmt where
 
 instance Format Color where
   set   = setForegroundColor >>= \sa -> return (\c -> sa c)
-  unset = restoreDefaultColors >>= \ra -> return (\_ -> ra)
+  unset = restoreDefaultColors >>= \ua -> return (\_ -> ua)
   with  = withForegroundColor >>= \wa -> return (\c s -> wa c s)
 
 data Bold = Bold
 instance Format Bold where
-  set  = boldOn >>= \ba -> return (\_ -> ba)
+  set  = boldOn >>= \sa -> return (\_ -> sa)
   with = withBold >>= \wa -> return (\_ s -> wa s)
 
 data Underline = Underline
 instance Format Underline where
-  set   = enterUnderlineMode >>= \ea -> return (\_ -> ea)
-  unset = exitUnderlineMode >>= \ea -> return (\_ -> ea)
+  set   = enterUnderlineMode >>= \sa -> return (\_ -> sa)
+  unset = exitUnderlineMode >>= \ua -> return (\_ -> ua)
   with  = withUnderline >>= \wa -> return (\_ s -> wa s)
 
 data Standout = Standout
 instance Format Standout where
-  set   = enterStandoutMode >>= \ea -> return (\_ -> ea)
-  unset = exitStandoutMode >>= \ea -> return (\_ -> ea)
+  set   = enterStandoutMode >>= \sa -> return (\_ -> sa)
+  unset = exitStandoutMode >>= \ua -> return (\_ -> ua)
   with  = withStandout >>= \wa -> return (\_ s -> wa s)
 
 data Formatted = Formatted String (Capability TermOutput)
@@ -43,15 +43,10 @@ data Formatted = Formatted String (Capability TermOutput)
 format :: Format fmt => String -> fmt -> Formatted
 format s fmt = Formatted s (with >>= \wa -> return (wa fmt (termText s)))
 
-data ComposedFormat f1 f2 = (Format f1, Format f2) => ComposedFormat f1 f2
-instance Format ComposedFormat where
-  set   = set >>= \sa -> return (sr sa) where
-    sr sa ComposedFormat f1 f2 = sa f1 <#> sa f2
-  unset = unset >>= \ua -> return (ur ua) where
-    ur ua ComposedFormat f1 f2 = ua f1 <#> ua f2
-  with  = set >>= \sa -> unset >>= \ua -> return (
-    \fr s -> set fr <#> s <#> unset fr)
-
+compose :: Format fmt => Formatted -> fmt -> Formatted
+compose (Formatted sn sf) fmt = Formatted sn (
+  set >>= \sa -> sf >>= \fa -> unset >>= \ua ->
+   return (sa fmt <#> fa <#> ua fmt))
 
 fprint :: Formatted -> IO ()
 fprint (Formatted plain formatted) = do

@@ -11,7 +11,7 @@ someText :: Formatted
 someText = format "some text\n" Blue
 
 moreText :: Formatted
-moreText = formats "more text\n" [Red]
+moreText = compose (format "more text\n" Red) Bold
 
 main :: IO ()
 main = do
