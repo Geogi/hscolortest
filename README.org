@@ -3,7 +3,7 @@
 * Introduction
 
 Developing this simple stand-alone Haskell program helps me understand
-how to color output by using `System.Console.Terminfo` (`terminfo`
+how to color output by using =System.Console.Terminfo= (=terminfo=
 package).
 
 * Checklist
