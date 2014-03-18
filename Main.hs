@@ -9,7 +9,7 @@ boldText = do
   bold  <- withBold
   color <- withForegroundColor
   return (termText "normal text " <#> bold (termText "bold text") <#> termText " normal text\n" <#>
-          (bold <#> color Blue) (termText "bold and blue") <#> termText " normal again")
+          (bold . (color Blue)) (termText "bold and blue") <#> termText " normal again")
 
 main :: IO ()
 main = do
