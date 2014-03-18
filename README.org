@@ -13,8 +13,11 @@ package).
 + [X] Get blue text
 + [ ] Get bold blue text
 + [ ] Factor out the formatting work
++ [ ] Get automatic formatting of errors
 + [ ] Color output from another module with the least boilerplate
   possible
-+ [ ] Try to see how to add coloring to an existing module with
-  non-invasive additions (e.g. not changing the types, adding some
-  values is OK)
++ [ ] Add coloring to an existing module with non-intrusive additions
+  (e.g. not changing the types, adding some values is OK)
++ [ ] Get it still working (not formatted) if the terminal is not
+  capable or terminfo is not present
++ [ ] Write a tutorial
