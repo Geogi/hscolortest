@@ -14,7 +14,7 @@ instance Error RedError where
       (h, t) = splitAt (i + 1) s
     Nothing -> RedError "Error:" s
 instance FShow RedError where
-  fshow (RedError h t) = (fconcat (compose (format h Red) Bold)
+  fshow (RedError h t) = (fconcat (fcompose (format h Red) Bold)
                           (format (" " ++ t) Red))
 
 type OrangeComp = Either RedError

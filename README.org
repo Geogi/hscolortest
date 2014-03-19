@@ -2,9 +2,10 @@
 
 * Introduction
 
-Developing this simple stand-alone Haskell program helps me understand
-how to color output by using =System.Console.Terminfo= (=terminfo=
-package).
+Developing this simple stand-alone Haskell program helped me
+understand how to color output by using =System.Console.Terminfo=
+(=terminfo= package). Currently it works well for my needs so that
+repo is on hold.
 
 * Checklist
 
@@ -14,12 +15,15 @@ package).
 + [X] Get bold red text
 + [X] Factor out the formatting work
 + [X] Get automatic formatting of errors
-+ [ ] Color output from another module with the least boilerplate
++ [X] Color output from another module with the least boilerplate
   possible
-+ [ ] Add coloring to an existing module with non-intrusive additions
++ [X] Add coloring to an existing module with non-intrusive additions
   (e.g. not changing the types, adding some values is OK)
-+ [ ] Get it still working (not formatted) if the terminal is not
++ [-] Get it still working (not formatted) if the terminal is not
   capable or terminfo is not present
+  + [X] Terminal not capable
+  + [ ] No terminfo
++ [ ] Simpler formatted strings building (with operators)
 + [ ] Add support for a =--no-color= option and infer its use if the
   program is piped
 + [ ] Write a tutorial

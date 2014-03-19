@@ -1,4 +1,4 @@
-module Format (format, compose, fconcat, lconcat, rconcat,
+module Format (format, fcompose, fconcat, lconcat, rconcat,
                fshow, fprint, fprintln,
                Bold (Bold), Underline (Underline), Standout (Standout),
                System.Console.Terminfo.Color.Color (..),
@@ -48,8 +48,8 @@ instance FShow Formatted where
 format :: Format fmt => String -> fmt -> Formatted
 format s fmt = Formatted s (with >>= \wa -> return (wa fmt (termText s)))
 
-compose :: Format fmt => Formatted -> fmt -> Formatted
-compose (Formatted sn sf) fmt = Formatted sn (
+fcompose :: Format fmt => Formatted -> fmt -> Formatted
+fcompose (Formatted sn sf) fmt = Formatted sn (
   set >>= \sa -> sf >>= \fa -> unset >>= \ua ->
    return (sa fmt <#> fa <#> ua fmt))
 

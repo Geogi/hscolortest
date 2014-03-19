@@ -14,7 +14,7 @@ noone i = return 1
 main :: IO ()
 main = do
   fprint (format "some text\n" Blue)
-  fprint (compose (format "more text\n" Red) Bold)
+  fprint (fcompose (format "more text\n" Red) Bold)
   case noone 1 of
     Left e  -> fprintln e
     Right i -> undefined
