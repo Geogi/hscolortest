@@ -1,4 +1,5 @@
-module Format (format, compose, fconcat, fshow, fprint, fprintln,
+module Format (format, compose, fconcat, lconcat, rconcat,
+               fshow, fprint, fprintln,
                Bold (Bold), Underline (Underline), Standout (Standout),
                System.Console.Terminfo.Color.Color (..),
                FShow) where
